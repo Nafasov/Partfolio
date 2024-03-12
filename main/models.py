@@ -18,14 +18,16 @@ class AboutMe(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = PhoneField(blank=True, help_text='Please enter your phone number')
     project_complete = models.IntegerField(default=0)
+    cvv = models.FileField(upload_to='main/cvv')
     created_date = models.DateTimeField(auto_now_add=True)
-    #
-    # def __str__(self):
-    #     return self.address
+
+    def __str__(self):
+        return self.name
 
 
 class Partner(models.Model):
     image = models.ImageField(upload_to='main/partner', null=True)
+    link = models.URLField(null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -68,6 +70,7 @@ class Skills(models.Model):
 class Services(models.Model):
     title = models.CharField(max_length=255)
     icon = models.ImageField(upload_to='main/services')
+    link = models.URLField(null=True, blank=True)
     description = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -79,6 +82,7 @@ class Projects(models.Model):
     title = models.CharField(max_length=255)
     category = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='main/project')
+    link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -97,7 +101,9 @@ class MeContact(models.Model):
     address = models.CharField(max_length=255, null=True)
     image = models.ImageField(upload_to='main/contact')
     number = PhoneField(null=True, help_text='Please enter your phone number')
+    li_me = models.URLField(null=True, blank=True)
     email = models.EmailField(null=True, help_text='Please enter your email address')
+    web_site = models.CharField(max_length=25)
     website = models.URLField(null=True, blank=True)
 
 

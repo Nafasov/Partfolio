@@ -14,7 +14,7 @@
                         <h1>Nurxon Nafasov</h1>
                         <h2>I'm a
                             <span class="txt-rotate" data-period="2000"
-                                  data-rotate="[ &quot;Web Designer.&quot;, &quot;Developer.&quot;, &quot;Photographer.&quot;, &quot;Marketer.&quot;, &quot;Blogger&quot; ]"></span>
+                                  data-rotate="[ {% for oc in occupations %} &quot;{{ oc }}.&quot;, {% endfor %}&quot; &quot; ]"></span>
                         </h2>
                     </div>
                 </div>
@@ -47,16 +47,12 @@
                                 regelialia.</p>
                             <ul class="about-info mt-4 px-md-0 px-2">
                                 <li class="d-flex"><span>Name:</span> <span>{{ about.name }}</span></li>
-                                <li class="d-flex"><span>Date of birth:</span> <span>{{ about.date|date:'F d Y' }}</span></li>
+                                <li class="d-flex"><span>Date of birth:</span>
+                                    <span>{{ about.date|date:'F d Y' }}</span></li>
                                 <li class="d-flex"><span>Address:</span> <span>{{ about.address }}</span></li>
                                 <li class="d-flex"><span>Zip code:</span> <span>{{ about.zip_code }}</span></li>
-                                <li class="d-flex"><span>Email:</span> <span>
-                                    {{ about.email }}
-                                    <a
-{#                                        href="https://preview.colorlib.com/cdn-cgi/l/email-protection"#}
-{#                                        class="__cf_email__"#}
-{#                                        data-cfemail="cbb9a4a5aaa7afa48baca6aaa2a7e5a8a4a6">[email&#160;protected]</a>#}
-                                </span>
+                                <li class="d-flex"><span>Email:</span>
+                                    <a href="mailto:{{ about.email }}"></a><span>{{ about.email }}</span>
                                 </li>
                                 <li class="d-flex"><span>Phone: </span> <span>{{ about.phone }}</span></li>
                             </ul>
@@ -68,7 +64,7 @@
                                 <span class="number" data-number="{{ about.project_complete }}">0</span>
                                 <span>Project complete</span>
                             </p>
-                            <p><a href="#" class="btn btn-primary py-3 px-3">Download CV</a></p>
+                            <p><a href="{{ about.cvv.url }}" class="btn btn-primary py-3 px-3">Download CV</a></p>
                         </div>
                     </div>
                 </div>
@@ -158,7 +154,8 @@
                                         <span class="progress-bar border-primary"></span>
                                         </span>
                                             <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                                                <div class="h2 font-weight-bold">{{ foo.percentage }}<sup class="small">%</sup></div>
+                                                <div class="h2 font-weight-bold">{{ foo.percentage }}<sup class="small">%</sup>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row text-center mt-4">
@@ -197,17 +194,17 @@
                     <div id="page-4" class="page four">
                         <h2 class="heading">Awards</h2>
                         {% for award in awards %}
-                        <div class="resume-wrap d-flex ftco-animate">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="flaticon-ideas"></span>
+                            <div class="resume-wrap d-flex ftco-animate">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="flaticon-ideas"></span>
+                                </div>
+                                <div class="text pl-3">
+                                    <span class="date">{{ award.years }}</span>
+                                    <h2>{{ award.name }}</h2>
+                                    <span class="position">{{ award.position }}</span>
+                                    <p>{{ award.content }}</p>
+                                </div>
                             </div>
-                            <div class="text pl-3">
-                                <span class="date">{{ award.years }}</span>
-                                <h2>{{ award.name }}</h2>
-                                <span class="position">{{ award.position }}</span>
-                                <p>{{ award.content }}</p>
-                            </div>
-                        </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -227,7 +224,7 @@
             </div>
             <div class="row">
                 {% for service in services %}
-                     <div class="col-md-4 text-center d-flex ftco-animate">
+                    <div class="col-md-4 text-center d-flex ftco-animate">
                         <a href="#" class="services-1 shadow">
                             <span class="icon">
                             <i><img width="100px" src="{{ service.icon.url }}"></i>
@@ -237,7 +234,7 @@
                                 <p>{{ service.description }}</p>
                             </div>
                         </a>
-                    </div>  
+                    </div>
                 {% endfor %}
 
 
@@ -245,7 +242,7 @@
         </div>
     </section>
 
-    
+
     <section class="ftco-section ftco-project" id="projects-section">
         <div class="container-fluid px-md-0">
             <div class="row no-gutters justify-content-center pb-5">
@@ -258,15 +255,15 @@
             <div class="row no-gutters">
                 {% for project in projects %}
                     <div class="col-md-4">
-                    <div class="project img ftco-animate d-flex justify-content-center align-items-center"
-                         style="background-image: url({{ project.image.url }});">
-                        <div class="overlay"></div>
-                        <div class="text text-center p-4">
-                            <h3><a href="#">{{ project.title }}</a></h3>
-                            <span>{{ project.category }}</span>
+                        <div class="project img ftco-animate d-flex justify-content-center align-items-center"
+                             style="background-image: url({{ project.image.url }});">
+                            <div class="overlay"></div>
+                            <div class="text text-center p-4">
+                                <h3><a href="#">{{ project.title }}</a></h3>
+                                <span>{{ project.category }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
@@ -277,13 +274,13 @@
             <div class="row d-md-flex align-items-center">
                 {% for foo in done %}
                     <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-                    <div class="block-18 shadow">
-                        <div class="text">
-                            <strong class="number" data-number="{{ foo.number }}">0</strong>
-                            <span>{{ foo.title }}</span>
+                        <div class="block-18 shadow">
+                            <div class="text">
+                                <strong class="number" data-number="{{ foo.number }}">0</strong>
+                                <span>{{ foo.title }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
@@ -299,78 +296,38 @@
                 </div>
             </div>
             <div class="row d-flex">
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="../article/single.html" class="block-20"
-                           style="background-image: url('../../images/image_1.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-                            <h3 class="heading"><a href="../article/single.html">Why Lead Generation is Key for Business
-                                Growth</a></h3>
-                            <div class="d-flex align-items-center mb-3 meta">
-                                <p class="mb-0">
-                                    <span class="mr-2">Sept. 12, 2019</span>
-                                    <a href="#" class="mr-2">Admin</a>
-                                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-                                </p>
+                {% for article in articles %}
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry justify-content-end">
+                            <a href="{% url 'article:detail' article.slug %}" class="block-20"
+                               style="background-image: url({{ article.image.url }});">
+                            </a>
+                            <div class="text mt-3 float-right d-block">
+                                <h3 class="heading"><a href="{% url 'article:detail' article.slug %}">{{ article.title|slice:60 }}</a></h3>
+                                <div class="d-flex align-items-center mb-3 meta">
+                                    <p class="mb-0">
+                                        <span class="mr-2">{{ article.created_date|date:"b d Y" }}</span>
+                                        <a href="#" class="mr-2">{{ article.author }}</a>
+                                        <a href="#" class="meta-chat"><span class="icon-chat"></span> {{ article.comments.count }}</a>
+                                    </p>
+                                </div>
+                                <p>  {{ article.top_content|safe|slice:'40' }}</p>
                             </div>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary
-                                regelialia.</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry justify-content-end">
-                        <a href="../article/single.html" class="block-20"
-                           style="background-image: url('../../images/image_2.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-                            <h3 class="heading"><a href="../article/single.html">Why Lead Generation is Key for Business
-                                Growth</a></h3>
-                            <div class="d-flex align-items-center mb-3 meta">
-                                <p class="mb-0">
-                                    <span class="mr-2">Sept. 12, 2019</span>
-                                    <a href="#" class="mr-2">Admin</a>
-                                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-                                </p>
-                            </div>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary
-                                regelialia.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-flex ftco-animate">
-                    <div class="blog-entry">
-                        <a href="../article/single.html" class="block-20"
-                           style="background-image: url('../../images/image_3.jpg');">
-                        </a>
-                        <div class="text mt-3 float-right d-block">
-                            <h3 class="heading"><a href="../article/single.html">Why Lead Generation is Key for Business
-                                Growth</a></h3>
-                            <div class="d-flex align-items-center mb-3 meta">
-                                <p class="mb-0">
-                                    <span class="mr-2">Sept. 12, 2019</span>
-                                    <a href="#" class="mr-2">Admin</a>
-                                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-                                </p>
-                            </div>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary
-                                regelialia.</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <section class="ftco-section ftco-hireme img" style="background-image: url(../../images/bg_1.jpg)">
+    <section class="ftco-section ftco-hireme img" style="background-image: url({% static 'images/bg_1.jpg' %})">
         <div class="overlay"></div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-7 ftco-animate text-center">
                     <h2>I'm <span>Available</span> for freelancing</h2>
                     <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    <p class="mb-0"><a href="#" class="btn btn-primary py-3 px-5">Hire me</a></p>
+                    <p class="mb-0"><a href="{{ mecontact.li_me }}" class="btn btn-primary py-3 px-5">Hire me</a></p>
                 </div>
             </div>
         </div>
@@ -415,40 +372,39 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Email Address</h3>
-                            <p>
-{#                                <a href="https://preview.colorlib.com/cdn-cgi/l/email-protection#b7ded9d1d8f7ced8c2c5c4dec3d299d4d8da"><span#}
-{#                                        class="__cf_email__" data-cfemail="127b7c747d526b7d6760617b66773c717d7f">[email&#160;protected]</span></a>#}
-                                {{ mecontact.email }}
+                            <p><a href="mailto:{{ mecontact.email }}">
+                                {{ mecontact.email }}</a>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 d-flex ftco-animate">
+                <div class="col-md-6 col-lg-3 d-flex ftco-animate" id="contact-formm">
                     <div class="align-self-stretch box text-center p-4 shadow">
                         <div class="icon d-flex align-items-center justify-content-center">
                             <span class="icon-globe"></span>
                         </div>
                         <div>
                             <h3 class="mb-4">Website</h3>
-                            <p><a href="{{ mecontact.website }}">{{ mecontact.website }}</a></p>
+                            <p><a href="{{ mecontact.website }}">{{ mecontact.web_site }}</a></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row no-gutters block-9">
                 <div class="col-md-6 order-md-last d-flex">
-                    <form action="#" class="bg-light p-4 p-md-5 contact-form">
+                    <form method="post" class="bg-light p-4 p-md-5 contact-form">
+                        {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name">
+                            {{ form.name }}
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email">
+                            {{ form.email }}
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            {{ form.subject }}
                         </div>
                         <div class="form-group">
-                            <textarea name id cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                            {{ form.message }}
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
